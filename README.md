@@ -202,3 +202,104 @@ endfunction
 " Shortcuts/Map Leader
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+
+
+" Change mapleader
+let mapleader=","
+" NERDTree
+nmap <F6> :NERDTreeToggle<cr>
+" Clear highlight search
+map <leader>cs :nohlsearch<cr>
+" Close current buffer
+map <leader>w :bd<cr>
+" [,* ] Search and replace the word under the cursor.
+nmap <leader>* :%s/\<<C-r><C-w>\>//<Left>
+" [,ss] Strip trailing whitespace.
+nmap <leader>ss :call StripTrailingWhitespaces()<CR>
+" [,cc] Toggle code comments.
+" https://github.com/tomtom/tcomment_vim
+map <leader>cc :TComment<CR>
+
+" [,w] Close current buffer
+map <leader>w :bdelete<CR>
+
+"----------------------------------------------
+" Splits
+"----------------------------------------------
+" Create horizontal splits below the current window
+set splitbelow
+set splitright
+
+" Creating splits
+nnoremap <leader>v :vsplit<cr>
+nnoremap <leader>h :split<cr>
+
+" Closing splits
+nnoremap <leader>q :close<cr>
+" End Splits
+
+" Make `Tab` autocomplete.
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" Prevent `Enter` to create new line when selecting from omni-completion
+inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+
+" Keep a menu item always highlighted
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+"----------------------------------------------
+" Plugin: 'junegunn/fzf.vim'
+"----------------------------------------------
+nnoremap <c-p> :FZF<cr>
+
+
+" End Map leader
+
+
+
+" Load `vim-plug`
+" Specify a directory for plugins
+" - For Neovim: ~/.local/share/nvim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-unimpaired'
+Plug 'tomtom/tcomment_vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'w0rp/ale'
+Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
+Plug 'sheerun/vim-polyglot'
+Plug 'scrooloose/syntastic'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ap/vim-buftabline'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'ggreer/the_silver_searcher'
+Plug 'zivyangll/git-blame.vim'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'rust-lang/rust.vim'
+Plug 'sebdah/vim-delve'
+Plug 'jiangmiao/auto-pairs'
+Plug 'scrooloose/nerdcommenter'
+" End installation of plugins
+
+" Initialize plugin system
+call plug#end()
+autocmd FileType json syntax match Comment +\/\/.\+$+
+autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
+
+" Status line for `lightline`
+" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
