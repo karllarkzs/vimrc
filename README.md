@@ -100,3 +100,105 @@ noremap <Up> <Nop>
 noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
+
+" move up/down consider wrapped lines
+nnoremap j gj
+nnoremap k gk
+
+nnoremap <C-D> :bnext<CR>
+nnoremap <C-S> :bprev<CR>
+
+" End General settings
+
+
+" ---------------------------------------------------------
+let NERDTreeShowHidden=1
+
+" Language specific settings
+
+" Go
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_interfaces = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_function_calls = 1
+let g:go_fmt_command = "goimports"
+let g:go_list_type = "quickfix"
+let g:go_auto_sameids = 1
+let g:go_auto_type_info = 1
+let g:go_snippet_engine = "neosnippet"
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+
+let g:javascript_plugin_flow = 1
+
+" Rust
+let g:rustfmt_autosave = 1
+
+
+" Ale
+let g:ale_linters = {
+\   'go': ['gopls', 'golint', 'go vet'],
+\}
+
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
+
+" silver_searcher
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+
+" End language specific settings
+
+
+" ----------------------------------------------------------------------
+" | Helper Functions                                                   |
+" ----------------------------------------------------------------------
+function! StripTrailingWhitespaces()
+
+    " Save last search and cursor position.
+
+    let searchHistory = @/
+    let cursorLine = line(".")
+    let cursorColumn = col(".")
+
+    " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    " Strip trailing whitespaces.
+
+    %s/\s\+$//e
+
+    " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    " Restore previous search history and cursor position.
+
+    let @/ = searchHistory
+    call cursor(cursorLine, cursorColumn)
+
+
+endfunction
+
+function! ToggleRelativeLineNumbers()
+
+    if ( &relativenumber == 1 )
+        set number
+    else
+        set relativenumber
+    endif
+
+endfunction
+
+function! CocCurrentFunction()
+    return get(b:, 'coc_current_function', '')
+endfunction
+
+" End Helper Functions
+" ----------------------------------------------------------------------
+
+" Shortcuts/Map Leader
+" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
