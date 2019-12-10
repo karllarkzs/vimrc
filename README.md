@@ -386,4 +386,5 @@ au FileType go nmap gr <Plug>(go-run)
 
 """" enable 24bit true color
 
-"""" enable the theme<Paste>
+"""" enable the theme
+
