@@ -303,3 +303,87 @@ autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeIm
 " Status line for `lightline`
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+let g:lightline = {}
+
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ }
+
+let g:lightline.colorscheme = 'wombat'
+
+let g:lightline.component_expand = {
+      \  'linter_checking': 'lightline#ale#checking',
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
+      \ }
+
+let g:lightline.component_type = {
+      \     'linter_checking': 'left',
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \     'linter_ok': 'left',
+      \ }
+
+let g:lightline.active = { 'right': [[ 'fileformat', 'fileencoding', 'percent', 'filetype', 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]],
+			\										 'left': [['mode', 'paste'], ['gitbranch', 'readonly', 'filename', 'modified']]
+			\	}
+
+let g:lightline.component_function = {
+      \     'gitbranch': 'fugitive#head',
+			\			'cocstatus': 'coc#status',
+			\			'currentfunction': 'CocCurrentFunction'
+      \ }
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename' ] ],
+      \ },
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename',
+      \ },
+      \ }
+
+function! LightlineFilename()
+  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+  let modified = &modified ? ' +' : ''
+  return filename . modified
+endfunction
+" End status line
+
+"----------------------------------------------
+" Plugin: 'ctrlpvim/ctrlp.vim'
+"----------------------------------------------
+" Note: We are not using CtrlP much in this configuration. But vim-go depend on
+" it to run GoDecls(Dir).
+
+" Disable the CtrlP mapping, since we want to use FZF instead for <c-p>.
+let g:ctrlp_map = ''
+
+"----------------------------------------------
+" Plugin: Ag
+"----------------------------------------------
+" Open Ag
+nnoremap <leader>a :Ag<space>
+
+" Mappings
+au FileType go nmap <leader>gt :GoDeclsDir<cr>
+au FileType go nmap <leader>gd <Plug>(go-def)
+au FileType go nmap gc <Plug>(go-coverage-toggle)
+au FileType go nmap gt <Plug>(go-test)
+au FileType go nmap gf <Plug>(go-test-func)
+au FileType go nmap gr <Plug>(go-run)
+
+
+
+"""" install
+" install with vim-plug
+
+" or with NeoBundle
+" NeoBundle 'Rigellute/rigel'
+" or with Vundle
+" Plugin 'Rigellute/rigel'
+
+"""" enable 24bit true color
+
+"""" enable the theme<Paste>
